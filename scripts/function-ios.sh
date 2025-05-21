@@ -120,6 +120,21 @@ get_common_cflags() {
     echo "-fstrict-aliasing ${BITCODE_FLAGS} -DIOS ${LTS_BUILD_FLAG}${BUILD_DATE} -isysroot ${SDK_PATH}"
     ;;
   esac
+
+  # local MATH_DEFINE="-D_USE_MATH_DEFINES"
+  # local TYPEDEF_FIX="-Du_int16_t=uint16_t -Du_int32_t=uint32_t -Du_int64_t=uint64_t"
+
+  # case ${ARCH} in
+  #   i386 | x86-64 | arm64-simulator)
+  #     echo "-fstrict-aliasing -DIOS ${LTS_BUILD_FLAG}${BUILD_DATE} ${TYPEDEF_FIX} ${MATH_DEFINE} -isysroot ${SDK_PATH}"
+  #     ;;
+  #   *-mac-catalyst)
+  #     echo "-fstrict-aliasing ${BITCODE_FLAGS} -DMACOSX ${LTS_BUILD_FLAG}${BUILD_DATE} ${TYPEDEF_FIX} ${MATH_DEFINE} -isysroot ${SDK_PATH}"
+  #     ;;
+  #   *)
+  #     echo "-fstrict-aliasing ${BITCODE_FLAGS} -DIOS ${LTS_BUILD_FLAG}${BUILD_DATE} ${TYPEDEF_FIX} ${MATH_DEFINE} -isysroot ${SDK_PATH}"
+  #     ;;
+  # esac
 }
 
 get_arch_specific_cflags() {
@@ -494,6 +509,17 @@ set_toolchain_paths() {
 
   if [ ! -f "${LIB_UUID_PACKAGE_CONFIG_PATH}" ]; then
     create_libuuid_system_package_config
+  fi
+
+  if [[ "$1" == "libpng" ]]; then
+    # 1. fp.h 주석 처리
+    sed -i.bak 's|# *include <fp.h>|// removed for modern macOS SDK|g' "${BASEDIR}/src/libpng/pngpriv.h"
+
+    # 2. math.h 삽입 (png.c)
+    sed -i.bak '1s|^|#include <math.h>\n|' "${BASEDIR}/src/${LIB_NAME}/png.c"
+
+    # 3. math.h 삽입 (pngrtran.c)
+    sed -i.bak '1s|^|#include <math.h>\n|' "${BASEDIR}/src/${LIB_NAME}/pngrtran.c"
   fi
 }
 

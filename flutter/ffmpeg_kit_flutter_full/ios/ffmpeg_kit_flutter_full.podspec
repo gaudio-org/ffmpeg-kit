@@ -20,11 +20,17 @@ Pod::Spec.new do |s|
   s.default_subspec = 'ffmpeg_kit_ios_local'
 
   s.subspec 'ffmpeg_kit_ios_local' do |ss|
-    ss.vendored_frameworks = 'Frameworks/ffmpeg-kit-ios-https/ffmpegkit.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavdevice.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavcodec.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavfilter.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavformat.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavutil.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libswresample.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libswscale.xcframework'
+    # ss.vendored_frameworks = 'Frameworks/ffmpeg-kit-ios-https/ffmpegkit.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavdevice.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavcodec.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavfilter.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavformat.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libavutil.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libswresample.xcframework', 'Frameworks/ffmpeg-kit-ios-https/libswscale.xcframework'
+    ss.vendored_frameworks = 'Frameworks/ffmpeg-kit-ios-lame/ffmpegkit.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libavdevice.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libavcodec.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libavfilter.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libavformat.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libavutil.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libswresample.xcframework', 'Frameworks/ffmpeg-kit-ios-lame/libswscale.xcframework'
   end
 
   s.dependency          'Flutter'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    # 'FRAMEWORK_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)/Frameworks/ffmpeg-kit-ios-full/**"',
+    # 'LD_RUNPATH_SEARCH_PATHS' => '@executable_path/Frameworks',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
+  }
 
   s.subspec 'min' do |ss|
     ss.source_files         = 'Classes/**/*'

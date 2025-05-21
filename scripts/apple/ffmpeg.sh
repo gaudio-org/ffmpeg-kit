@@ -600,6 +600,7 @@ install_ffmpeg() {
 }
 
 ${SED_INLINE} 's|$(SLIBNAME_WITH_MAJOR),|$(SLIBPREF)$(FULLNAME).framework/$(SLIBPREF)$(FULLNAME),|g' ${BASEDIR}/src/ffmpeg/ffbuild/config.mak 1>>"${BASEDIR}"/build.log 2>&1 || return 1
+# ${SED_INLINE} 's|$(SLIBNAME_WITH_MAJOR),|$(FULLNAME).framework/$(FULLNAME),|g' ${BASEDIR}/src/ffmpeg/ffbuild/config.mak 1>>"${BASEDIR}"/build.log 2>&1 || return 1
 
 # BUILD DYNAMIC LIBRARIES WITH DEFAULT OPTIONS
 build_ffmpeg
