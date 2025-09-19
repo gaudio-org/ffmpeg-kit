@@ -28,7 +28,7 @@ apply plugin: "kotlin-android"
 
 android {
     namespace = "com.arthenica.ffmpegkit.flutter"
-    compileSdk = 33
+    compileSdk = 35
 
     lintOptions {
         disable 'GradleCompatible'
@@ -61,7 +61,8 @@ android {
 
     dependencies {
         implementation('androidx.annotation:annotation:1.5.0')
-        implementation('com.arthenica:ffmpeg-kit-full:6.0-2.LTS') // Dependency from local Maven repository
+        // 압축 해제된 AAR의 JAR 파일을 직접 사용
+        implementation files('libs/ffmpeg-kit-extracted/classes.jar')
         implementation('com.arthenica:smart-exception-java:0.2.1') // Dependency from Live
         implementation('com.arthenica:smart-exception-common:0.2.1') // Dependency from Live        
     }
