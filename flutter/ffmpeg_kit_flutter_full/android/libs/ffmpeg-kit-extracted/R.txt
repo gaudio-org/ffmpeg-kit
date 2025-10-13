@@ -1,0 +1,5 @@
+int raw license 0x0
+int raw license_cpu_features 0x0
+int raw license_lame 0x0
+int raw license_libiconv 0x0
+int raw source 0x0
